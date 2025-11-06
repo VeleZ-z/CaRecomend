@@ -1,31 +1,32 @@
-import { useState } from 'react'
-import carlogo from '/car-logo.svg'
-import './App.css'
+import { Navigate, Route, Routes } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
+import VehicleDetailPage from './pages/VehicleDetailPage';
+import ProfilePage from './pages/ProfilePage';
+import ProtectedRoute from './components/common/ProtectedRoute';
+import MainLayout from './components/layout/MainLayout';
+import useAuth from './hooks/useAuth';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const { isAuthenticated } = useAuth();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={carlogo} className="logo" alt="car logo" />
-        </a>
-      </div>
-      <h1>CaRecomend</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Routes>
+      <Route
+        path="/login"
+        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />}
+      />
 
-export default App
+      <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/vehiculo/:id" element={<VehicleDetailPage />} />
+        <Route path="/perfil" element={<ProfilePage />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
+  );
+};
+
+export default App;
