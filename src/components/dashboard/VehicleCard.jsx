@@ -1,8 +1,40 @@
 import { Link } from 'react-router-dom';
 import RatingStars from '../common/RatingStars';
 
+const priceFormatter = new Intl.NumberFormat('es-CO', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+});
+
 const VehicleCard = ({ vehicle }) => {
-  const { id, name, brand, model, year, avgRating, description, features = [], tags = [] } = vehicle;
+  const {
+    id,
+    name,
+    brand,
+    model,
+    year,
+    avgRating,
+    description,
+    features = [],
+    tags = [],
+    cantidadPasajeros,
+    propulsion,
+    rangoRuido,
+    precio,
+  } = vehicle;
+
+  const propulsionLabel = {
+    0: 'Combustible',
+    1: 'Híbrido',
+    2: 'Eléctrico',
+  }[propulsion];
+
+  const noiseLabel = {
+    silencioso: 'Ruido bajo',
+    equilibrado: 'Ruido medio',
+    alto: 'Ruido alto',
+  }[rangoRuido];
 
   return (
     <article
@@ -28,6 +60,29 @@ const VehicleCard = ({ vehicle }) => {
           </li>
         ))}
       </ul>
+
+      <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+        {typeof precio === 'number' ? (
+          <span className="rounded-full bg-slate-100 px-3 py-1">
+            {priceFormatter.format(precio)}
+          </span>
+        ) : null}
+        {propulsionLabel ? (
+          <span className="rounded-full bg-slate-100 px-3 py-1">
+            {propulsionLabel}
+          </span>
+        ) : null}
+        {cantidadPasajeros ? (
+          <span className="rounded-full bg-slate-100 px-3 py-1">
+            {cantidadPasajeros} pasajeros
+          </span>
+        ) : null}
+        {noiseLabel ? (
+          <span className="rounded-full bg-slate-100 px-3 py-1">
+            {noiseLabel}
+          </span>
+        ) : null}
+      </div>
 
       <footer className="mt-6 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">

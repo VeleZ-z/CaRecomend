@@ -1,5 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export const defaultPreferences = {
+  esRural: false,
+  esManual: false,
+  cantidadPasajeros: 5,
+  rangoRuido: 'equilibrado',
+  precioMin: 25000,
+  precioMax: 45000,
+  propulsion: 0,
+};
+
 const initialState = {
   currentUser: null,
 };
@@ -16,7 +26,15 @@ const userSlice = createSlice({
     },
     updatePreferences(state, action) {
       if (state.currentUser) {
-        state.currentUser.preferences = action.payload;
+        const currentPreferences =
+          state.currentUser.preferences && typeof state.currentUser.preferences === 'object'
+            ? state.currentUser.preferences
+            : {};
+        state.currentUser.preferences = {
+          ...defaultPreferences,
+          ...currentPreferences,
+          ...action.payload,
+        };
       }
     },
   },

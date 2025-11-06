@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../store/userSlice';
+import { login, defaultPreferences } from '../store/userSlice';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const LoginPage = () => {
       login({
         id: `user-${form.name.toLowerCase().replace(/\s+/g, '-')}`,
         name: form.name,
-        preferences: 'SUV familiar, seguridad, tecnología',
+        preferences: { ...defaultPreferences },
       }),
     );
     navigate('/dashboard');

@@ -23,6 +23,12 @@ export const vehicles = [
     description:
       'Sedán compacto con gran equilibrio entre rendimiento, confort y tecnología de asistencia.',
     tags: ['ahorro', 'seguridad', 'conectividad'],
+    esRural: false,
+    esManual: false,
+    cantidadPasajeros: 7,
+    rangoRuido: 'silencioso',
+    precio: 32000,
+    propulsion: 0,
   },
   {
     id: 'veh-2',
@@ -40,6 +46,12 @@ export const vehicles = [
     description:
       'SUV eléctrico familiar con gran autonomía, aceleración inmediata y ecosistema conectado.',
     tags: ['eléctrico', 'tecnología', 'familiar'],
+    esRural: false,
+    esManual: false,
+    cantidadPasajeros: 5,
+    rangoRuido: 'silencioso',
+    precio: 58000,
+    propulsion: 2,
   },
   {
     id: 'veh-3',
@@ -57,6 +69,12 @@ export const vehicles = [
     description:
       'SUV mediano con enfoque premium en materiales, manejo deportivo y seguridad avanzada.',
     tags: ['confort', 'premium', 'seguridad'],
+    esRural: true,
+    esManual: false,
+    cantidadPasajeros: 5,
+    rangoRuido: 'equilibrado',
+    precio: 48000,
+    propulsion: 0,
   },
   {
     id: 'veh-4',
@@ -74,6 +92,12 @@ export const vehicles = [
     description:
       'Pickup deportiva optimizada para uso off-road con excelentes capacidades y equipamiento.',
     tags: ['off-road', 'potencia', 'aventura'],
+    esRural: true,
+    esManual: true,
+    cantidadPasajeros: 5,
+    rangoRuido: 'alto',
+    precio: 62000,
+    propulsion: 0,
   },
   {
     id: 'veh-5',
@@ -91,6 +115,12 @@ export const vehicles = [
     description:
       'Hatchback premium equilibrado entre deportividad, tecnología y estilo urbano.',
     tags: ['premium', 'urbano', 'deportivo'],
+    esRural: false,
+    esManual: true,
+    cantidadPasajeros: 5,
+    rangoRuido: 'equilibrado',
+    precio: 45000,
+    propulsion: 0,
   },
   {
     id: 'veh-6',
@@ -108,6 +138,12 @@ export const vehicles = [
     description:
       'SUV compacto híbrido con consumo sobresaliente y alto nivel de seguridad activa.',
     tags: ['ahorro', 'seguridad', 'familiar'],
+    esRural: false,
+    esManual: false,
+    cantidadPasajeros: 5,
+    rangoRuido: 'equilibrado',
+    precio: 38000,
+    propulsion: 1,
   },
 ];
 

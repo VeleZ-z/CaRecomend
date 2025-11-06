@@ -1,25 +1,19 @@
-import { useState } from 'react';
-import VehicleFilters from '../components/dashboard/VehicleFilters';
+import { Link } from 'react-router-dom';
 import VehicleList from '../components/dashboard/VehicleList';
-import useVehicles from '../hooks/useVehicles';
-import useCategories from '../hooks/useCategories';
+import usePreferenceRecommendations from '../hooks/usePreferenceRecommendations';
 import useAuth from '../hooks/useAuth';
 
 const DashboardPage = () => {
   const { currentUser } = useAuth();
-  const [filters, setFilters] = useState({
-    searchTerm: '',
-    categoryId: '',
-  });
+  const preferences = currentUser?.preferences;
+  const hasPreferences = Boolean(preferences);
 
   const {
-    data: vehicles = [],
+    data: recommendedVehicles = [],
     isLoading,
     isError,
     refetch,
-  } = useVehicles(filters);
-
-  const { data: categories = [] } = useCategories();
+  } = usePreferenceRecommendations(hasPreferences ? preferences : null);
 
   return (
     <div className="space-y-8">
@@ -29,18 +23,31 @@ const DashboardPage = () => {
           Hola {currentUser?.name ?? 'conductor'}, descubre vehículos para ti
         </h1>
         <p className="mt-4 max-w-2xl text-sm text-white/90">
-          Filtra por categoría o palabra clave, revisa las calificaciones de otros usuarios y encuentra el vehículo ideal según tus preferencias.
+          Tus recomendaciones se generan automáticamente con los parámetros definidos en el perfil.
         </p>
       </header>
 
-      <VehicleFilters filters={filters} categories={categories} onFiltersChange={setFilters} />
-
-      <VehicleList
-        vehicles={vehicles}
-        isLoading={isLoading}
-        isError={isError}
-        onRetry={refetch}
-      />
+      {hasPreferences ? (
+        <VehicleList
+          vehicles={recommendedVehicles}
+          isLoading={isLoading}
+          isError={isError}
+          onRetry={refetch}
+        />
+      ) : (
+        <div className="rounded-3xl border border-dashed border-primary/50 bg-white/80 p-10 text-center">
+          <h2 className="text-2xl font-semibold text-slate-900">Configura tus preferencias</h2>
+          <p className="mt-3 text-sm text-slate-600">
+            Completa el formulario del perfil para generar recomendaciones personalizadas.
+          </p>
+          <Link
+            to="/perfil"
+            className="mt-6 inline-flex items-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary/80"
+          >
+            Ir al perfil
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

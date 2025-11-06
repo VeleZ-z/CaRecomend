@@ -7,6 +7,24 @@ import useVehicleReviews from '../hooks/useVehicleReviews';
 import useVehicleRecommendation from '../hooks/useVehicleRecommendation';
 import useAuth from '../hooks/useAuth';
 
+const propulsionDisplay = {
+  0: 'Combustible',
+  1: 'Híbrido',
+  2: 'Eléctrico',
+};
+
+const noiseDisplay = {
+  silencioso: 'Cabina silenciosa',
+  equilibrado: 'Ruido equilibrado',
+  alto: 'Ruido elevado',
+};
+
+const priceFormatter = new Intl.NumberFormat('es-CO', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+});
+
 const VehicleDetailPage = () => {
   const { id } = useParams();
   const { currentUser } = useAuth();
@@ -107,6 +125,37 @@ const VehicleDetailPage = () => {
               {tag}
             </span>
           ))}
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <p className="text-xs uppercase tracking-[0.25em] text-primary">Propulsión</p>
+            <p className="mt-1 text-sm font-semibold text-slate-800">
+              {propulsionDisplay[vehicle.propulsion] ?? 'No especificado'}
+            </p>
+            <p className="text-xs text-slate-500">
+              Valor normalizado: {vehicle.propulsion}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <p className="text-xs uppercase tracking-[0.25em] text-primary">Capacidad</p>
+            <p className="mt-1 text-sm font-semibold text-slate-800">
+              Hasta {vehicle.cantidadPasajeros} pasajeros
+            </p>
+            <p className="text-xs text-slate-500">
+              {(vehicle.esRural ? 'Apto para terrenos rurales' : 'Optimizado para ciudad')}{' '}
+              - {vehicle.esManual ? 'Caja manual' : 'Caja automática'}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <p className="text-xs uppercase tracking-[0.25em] text-primary">Precio estimado</p>
+            <p className="mt-1 text-sm font-semibold text-slate-800">
+              {typeof vehicle.precio === 'number' ? priceFormatter.format(vehicle.precio) : 'No indicado'}
+            </p>
+            <p className="text-xs text-slate-500">
+              {noiseDisplay[vehicle.rangoRuido] ?? 'Sin dato de ruido'}
+            </p>
+          </div>
         </div>
       </header>
 

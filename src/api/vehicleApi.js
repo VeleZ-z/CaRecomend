@@ -44,3 +44,13 @@ export const getVehicleRecommendation = async ({ vehicleId, preferences }) => {
   });
   return data;
 };
+
+export const getPreferenceRecommendations = async (preferences) => {
+  if (shouldUseMock) {
+    return mockVehicleApi.getRecommendationsByPreferences(preferences);
+  }
+  const { data } = await axiosClient.post('/recomendaciones', {
+    preferencias: preferences,
+  });
+  return data;
+};

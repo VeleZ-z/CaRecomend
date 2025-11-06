@@ -4,4 +4,5 @@ export const queryKeys = {
   vehicleReviews: (vehicleId) => ['vehicles', vehicleId, 'reviews'],
   categories: ['categories'],
   recommendation: (vehicleId) => ['vehicles', vehicleId, 'recommendation'],
+  preferenceRecommendations: (preferences) => ['recommendations', 'preferences', preferences],
 };
